@@ -47,3 +47,5 @@ def main():
             if x[i][j].varValue > 0:
                 print(ciudades_origen[i], "->", ciudades_destino[j], ":", x[i][j].varValue)
 
+main()
+

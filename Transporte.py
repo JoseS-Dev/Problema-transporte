@@ -11,7 +11,14 @@ def main():
 
     # Solicitar la oferta y demanda
     oferta = list(map(int, input("Ingrese la oferta de cada ciudad de origen (separadas por comas): ").split(',')))
-
     demanda = list(map(int, input("Ingrese la demanda de cada ciudad de destino (separadas por comas): ").split(',')))
 
+    # Solicitar la matriz de costos de envío
+    costos = []
+    for ciudad_origen in ciudades_origen:
+        costos_fila = list(map(int, input(f"Ingrese los costos de envío desde {ciudad_origen} (separados por comas): ").split(',')))
+        costos.append(costos_fila)
     
+    # Crear el problema de programación lineal con la libreria pulp
+    prob = pulp.LpProblem("Problema_de_Transporte", pulp.LpMinimize)
+

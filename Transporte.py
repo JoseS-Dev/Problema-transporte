@@ -34,4 +34,16 @@ def main():
     
     for j in range(len(ciudades_destino)):
         prob += pulp.lpSum([x[i][j] for i in range(len(ciudades_origen))]) >= demanda[j], f"Demanda_{j}"
+    
+    # Resolver el problema
+    prob.solve()
+    # Mostrar resultados
+    print("\nEstado de la solución:", pulp.LpStatus[prob.status])
+    print("Costo mínimo total de transporte: $", pulp.value(prob.objective))
+    print("Cantidad de productos enviados:")
+    
+    for i in range(len(ciudades_origen)):
+        for j in range(len(ciudades_destino)):
+            if x[i][j].varValue > 0:
+                print(ciudades_origen[i], "->", ciudades_destino[j], ":", x[i][j].varValue)
 

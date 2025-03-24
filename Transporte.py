@@ -22,3 +22,16 @@ def main():
     # Crear el problema de programación lineal con la libreria pulp
     prob = pulp.LpProblem("Problema_de_Transporte", pulp.LpMinimize)
 
+    #Crear variables de decisión
+    x = pulp.LpVariable.dicts("x", (range(len(ciudades_origen)), range(len(ciudades_destino))), lowBound=0, cat='Continuous')
+
+    # Función objetivo: minimizar el costo total
+    prob += pulp.lpSum([costos[i][j] * x[i][j] for i in range(len(ciudades_origen)) for j in range(len(ciudades_destino))]), "Costo_Total"
+
+    # Restricciones de oferta y demanda
+    for i in range(len(ciudades_origen)):
+        prob += pulp.lpSum([x[i][j] for j in range(len(ciudades_destino))]) <= oferta[i], f"Oferta_{i}"
+    
+    for j in range(len(ciudades_destino)):
+        prob += pulp.lpSum([x[i][j] for i in range(len(ciudades_origen))]) >= demanda[j], f"Demanda_{j}"
+
